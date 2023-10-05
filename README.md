@@ -9,21 +9,44 @@ ChromoSolve provides an easy-to-use and versatile platform, simplifying the impl
 
 Evolutionary algorithms are inspired by the process of natural evolution—think about how creatures adapt and evolve over generations to better survive in their environment. These algorithms utilize similar principles, such as selection, mutation, and crossover (mixing traits), to find solutions to problems.
 
-### What Do They Do?
+#### Key Terms
 
-Imagine you're trying to find the best recipe for a cookie. You have a basic idea, but there are lots of small changes you could make—different amounts of sugar, flour, or chocolate chips, for example. An evolutionary algorithm tries out lots of different recipes and then "evolves" them to get closer to the best possible cookie:
+- **Population**: Imagine a group of solutions to a problem, much like a flock of birds, each trying to reach a destination in their own way.
+  
+- **Individual**: Each bird in our metaphorical flock represents an individual solution to the problem.
 
-1. **Start with a Mix**: It begins with a bunch of random recipes.
+- **Genotype**: The genetic code of each individual. Think of it as a unique recipe of ingredients (variables) that defines it.
 
-2. **Taste Test (Evaluate)**: It tries them out to see how good they are.
+- **Phenotype**: The actual expression or outcome resulting from that genetic code or recipe (like a baked cookie).
 
-3. **Keep the Best**: The best-tasting recipes are kept for the next round.
+#### Basic Workflow of Evolutionary Algorithm:
 
-4. **Mix and Tweak (Evolve)**: It then creates a new set of recipes by making small changes to the chosen ones or mixing them together.
+1. **Initialization**: We start by creating our first population, which is like gathering our first flock of birds, each having a unique way (genotype) to reach the destination.
+   
+2. **Mapping (Genotype to Phenotype)**: Think of the genotype as a map each bird is using to reach the destination. When a bird follows its map (genotype), the actual path it takes and its final landing spot is the phenotype.
+   
+3. **Fitness Evaluation**: After the birds land, we determine how close each one got to the desired destination. This measurement of success is called "fitness."
+   
+4. **Selection**: Birds that land closer to the destination (those with higher fitness) are chosen to create the next generation because they have proved that their maps have some valuable information.
+   
+5. **Crossover (Mating)**: Now, we create new maps (genotypes) for the next flock by combining parts of the maps from the selected birds, hoping to integrate the best parts from each parent map into the offspring.
+   
+6. **Mutation**: Occasionally, we slightly alter a bit of the new maps randomly. This represents a tiny change in the path to explore new possibilities we might not have seen otherwise.
+   
+7. **New Population (Offspring)**: The new flock, created from crossovers and mutations, forms the next generation that will follow their maps (genotypes) and create new paths (phenotypes).
 
-5. **Repeat**: This process is repeated for several rounds.
+8. **Repeat**: Steps 3-7 are repeated: evaluating the new paths, selecting the best birds, creating new maps, and forming new generations, until a bird finds the ideal or near-perfect landing spot, or until we decide to stop the process.
 
-6. **Best Recipe**: Eventually, the algorithm helps find the recipe that makes a cookie taste the best according to the set criteria (like being chewy, sweet, etc.).
+9. **Termination**: When we find a solution that’s good enough or when we have iterated through the process a predetermined number of times, we conclude the algorithm.
+
+![Basic Flow](Docs/BasicFlow.svg)
+
+#### In a Nutshell:
+- Evolutionary algorithms mimic the principle of the survival of the fittest.
+- We iteratively create generations of solutions, evaluating and selectively breeding them to produce better and better outcomes over time.
+- The entire process is a cycle of mapping genotypes to phenotypes, assessing fitness, and generating new solutions until our goal is satisfactorily met!
+
+This is a simple analogy to help understand the concept. In practice, EAs solve far more complex, multi-dimensional problems where the solution is not as straightforward as finding a single destination point.
 
 ### What Are They Good For?
 
@@ -37,6 +60,13 @@ Imagine you're trying to find the best recipe for a cookie. You have a basic ide
 
 In a nutshell, evolutionary algorithms are like super-smart trial and error machines. They try out lots of different solutions, learn from the best ones, and iteratively improve upon them to solve problems or optimize outcomes!
 
+### Is an Evolutionary Algorithm Right for Your Problem?
+
+1. **Black Box Scenario**: You have a problem where you can input variables and observe results, but don’t necessarily know how the inputs are transformed into outputs.
+   
+2. **Evaluating Goodness**: While the optimal input is unknown, you can judge the quality of a solution when you see one by observing and measuring the output it produces.
+
+**If both apply, evolutionary algorithms might be a solid approach for your problem optimization!**
 
 
 
