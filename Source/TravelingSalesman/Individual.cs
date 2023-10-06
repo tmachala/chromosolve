@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+
 namespace TravelingSalesman;
 
 /// <summary>
@@ -14,6 +17,13 @@ public class Individual
 
     public override string ToString()
     {
-        return string.Join(" -> ", VisitedCities.Select(c => c.ToString()));
+        return string.Join(" → ", VisitedCities.Select(FormatCity));
+    }
+
+    private static string FormatCity(City city)
+    {
+        var fieldInfo = typeof(City).GetField(city.ToString());
+        var attr = fieldInfo!.GetCustomAttribute<DisplayAttribute>()!;
+        return $"🏠{attr.Name}";
     }
 }

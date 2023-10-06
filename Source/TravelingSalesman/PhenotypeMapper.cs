@@ -2,7 +2,7 @@ using ChromoSolve;
 
 namespace TravelingSalesman;
 
-public static class PhenotypeMapper
+public class PhenotypeMapper : IPhenotypeMapper<Individual>
 {
     /// <summary>
     /// Each gene represents a city to visit so we'll need as many genes
@@ -11,9 +11,9 @@ public static class PhenotypeMapper
     public static int RequiredChromosomeLength => Enum.GetValues<City>().Length;
     
     /// <summary>
-    /// Turns genotype, the genetic information, into a phenotype, a.k.a an Individual.
+    /// Turns genotype, the genetic information, into a phenotype, a.k.a an individual.
     /// </summary>
-    public static Individual FromGenotype(double[] genotype)
+    public Individual CreateIndividual(double[] genotype)
     {
         var remainingCities = Enum.GetValues<City>().ToList();
         var visitedCities = new City[CityCount];

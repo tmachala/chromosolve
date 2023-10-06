@@ -10,26 +10,28 @@
 using ChromoSolve;
 using TravelingSalesman;
 
-Console.WriteLine("Traveling Salesman Problem");
-
-var settings = new DifferentialEvolutionSettings
+var settings = new DifferentialEvolutionSettings<Individual>
 {
-    // The function that tells how good each individual (a candidate solution) is
+    // The function that guides the DE algorithm by telling it how good each
+    // individual (a candidate solution) is
     FitnessFunction = new FitnessFunction(),
     
-    // How long the genetic information is
+    // The mapper that can turn chromosome (the genetic information) into
+    // an individual (a candidate solution to Bob's problem)
+    PhenotypeMapper = new PhenotypeMapper(),
+    
+    // How long the genetic information needs to be so that the mapper can
+    // construct an individual
     ChromosomeLength = PhenotypeMapper.RequiredChromosomeLength,
     
-    // How many individuals there are in each generation
+    // How many individuals should the evolution create in each generation
     PopulationSize = 100
 };
 
-var evolution = new DifferentialEvolution(settings);
+var evolution = new DifferentialEvolution<Individual>(settings);
 
-var bestChromosome = evolution.Optimize(generations: 1000);
-var bestIndividual = PhenotypeMapper.FromGenotype(bestChromosome);
-var totalDistance = settings.FitnessFunction.Evaluate(bestChromosome);
+var result = evolution.Optimize(generations: 1000);
 
-Console.WriteLine("The best route found:");
-Console.WriteLine(bestIndividual);
-Console.WriteLine($"Total distance: {totalDistance} km");
+Console.WriteLine($"Best Route Found: {result.Individual}");
+Console.WriteLine($"Total Distance:   {result.Fitness} km");
+Console.WriteLine($"Generation:       {result.Generation}");

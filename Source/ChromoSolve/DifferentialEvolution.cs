@@ -1,23 +1,24 @@
 ﻿namespace ChromoSolve;
 
-public class DifferentialEvolution
+public class DifferentialEvolution<TIndividual>
 {
-    private readonly DifferentialEvolutionSettings _settings;
+    private readonly DifferentialEvolutionSettings<TIndividual> _settings;
     private readonly Random _random;
 
-    public DifferentialEvolution(DifferentialEvolutionSettings settings)
+    public DifferentialEvolution(DifferentialEvolutionSettings<TIndividual> settings)
     {
         _settings = settings;
         _random = settings.RandomNumberGenerator;
     }
 
-    public double[] Optimize(int generations)
+    public EvolutionResult<TIndividual> Optimize(int generations)
     {
         var popSize = _settings.PopulationSize;
         var chromosomeLen = _settings.ChromosomeLength;
         var lowerBound = _settings.LowerBound;
         var upperBound = _settings.UpperBound;
         var fitnessFn = _settings.FitnessFunction;
+        var mapper = _settings.PhenotypeMapper;
         var stopThreshold = _settings.FitnessFunction.StopThreshold;
         
         var population = new double[popSize][];
@@ -32,15 +33,17 @@ public class DifferentialEvolution
             {
                 chromosome[j] = lowerBound + _random.NextDouble() * (upperBound - lowerBound);
             }
-
+            
+            var individual = mapper.CreateIndividual(chromosome);
+            
+            fitness[i] = fitnessFn.Evaluate(individual);
             population[i] = chromosome;
-            fitness[i] = fitnessFn.Evaluate(chromosome);
         }
         
         var f = _settings.ScalingFactor;
         var cr = _settings.CrossRate;
-
-        for (var g = 0; g < generations; g++)
+        
+        for (var gen = 1; gen <= generations; gen++)
         {
             for (var i = 0; i < popSize; i++)
             {
@@ -50,7 +53,9 @@ public class DifferentialEvolution
                 // Create mutant vector
                 var mutant = new double[chromosomeLen];
                 for (var j = 0; j < chromosomeLen; j++)
+                {
                     mutant[j] = a[j] + f * (b[j] - c[j]);
+                }
 
                 // Create trial vector through crossover
                 var trial = new double[chromosomeLen];
@@ -74,7 +79,8 @@ public class DifferentialEvolution
                 }
 
                 // Selection
-                var trialFitness = fitnessFn.Evaluate(trial);
+                var trialIndividual = mapper.CreateIndividual(trial);
+                var trialFitness = fitnessFn.Evaluate(trialIndividual);
                 
                 if (trialFitness < fitness[i])
                 {
@@ -86,19 +92,20 @@ public class DifferentialEvolution
                 if (trialFitness <= stopThreshold)
                 {
                     // TODO: Remove
-                    Console.WriteLine($"Gen {g}; Best Fitness: {fitness.Min()}");
+                    Console.WriteLine($"Gen {gen}; Best Fitness: {fitness.Min()}");
                     
-                    return trial;
+                    return new EvolutionResult<TIndividual>(gen, trialFitness, trialIndividual);
                 }
             }
             
             // TODO: Remove
-            Console.WriteLine($"Gen {g}; Best Fitness: {fitness.Min()}");
+            Console.WriteLine($"Gen {gen}; Best Fitness: {fitness.Min()}");
         }
 
-        // Return the best individual
-        var bestIndex = Array.IndexOf(fitness, fitness.Min());
-        return population[bestIndex];
+        // Find and return the best individual
+        var bestFitness = fitness.Min();
+        var bestIndividual = mapper.CreateIndividual(population[Array.IndexOf(fitness, bestFitness)]);
+        return new EvolutionResult<TIndividual>(generations, bestFitness, bestIndividual);
     }
 
     private (double[], double[], double[]) PickThreeChromosomes(ref double[][] population)

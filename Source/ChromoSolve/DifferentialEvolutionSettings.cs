@@ -8,14 +8,20 @@ namespace ChromoSolve;
 /// This class holds properties that influence the evolutionary computation, such as the 
 /// population size, chromosome length, and bounds for the DE algorithm.
 /// </summary>
-public class DifferentialEvolutionSettings
+public class DifferentialEvolutionSettings<TIndividual>
 {
     /// <summary>
     /// Gets or sets the fitness function used to evaluate the quality of solutions in the population.
     /// The fitness function is critical in Differential Evolution, as it helps in selecting potential 
     /// candidate solutions for the next generation.
     /// </summary>
-    public IFitnessFunction FitnessFunction { get; set; } = null!;
+    public IFitnessFunction<TIndividual> FitnessFunction { get; set; } = null!;
+
+    /// <summary>
+    /// Gets or sets the phenotype mapper used to convert chromosome representations into individual phenotypes
+    /// (candidate solutions).
+    /// </summary>
+    public IPhenotypeMapper<TIndividual> PhenotypeMapper { get; set; } = null!;
     
     /// <summary>
     /// Gets or sets the random number generator used for various stochastic processes in Differential Evolution, 
