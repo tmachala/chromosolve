@@ -91,15 +91,13 @@ public class DifferentialEvolution<TIndividual>
                 // End the evolution right here if we have found an ideal solution
                 if (trialFitness <= stopThreshold)
                 {
-                    // TODO: Remove
-                    Console.WriteLine($"Gen {gen}; Best Fitness: {fitness.Min()}");
+                    //Console.WriteLine($"Gen {gen}; Best Fitness: {fitness.Min()}");
                     
                     return new EvolutionResult<TIndividual>(gen, trialFitness, trialIndividual);
                 }
             }
             
-            // TODO: Remove
-            Console.WriteLine($"Gen {gen}; Best Fitness: {fitness.Min()}");
+            //Console.WriteLine($"Gen {gen}; Best Fitness: {fitness.Min()}");
         }
 
         // Find and return the best individual
