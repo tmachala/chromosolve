@@ -22,11 +22,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ChromoSolve\ChromoSolve.csproj" />
+      <ProjectReference Include="..\..\ChromoSolve\ChromoSolve.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ChromoSolve\ChromoSolve.csproj" />
+      <ProjectReference Include="..\..\ChromoSolve\ChromoSolve.csproj" />
     </ItemGroup>
 
 </Project>
