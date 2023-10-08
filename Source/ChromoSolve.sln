@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{09973AEE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelingSalesman", "Samples\TravelingSalesman\TravelingSalesman.csproj", "{C77455B6-2542-41DD-9604-18EB5FE77B52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Knapsack", "Samples\Knapsack\Knapsack.csproj", "{05027FE2-2C4E-4676-8E37-B90B0B6974B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,9 +36,14 @@ Global
 		{C77455B6-2542-41DD-9604-18EB5FE77B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C77455B6-2542-41DD-9604-18EB5FE77B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C77455B6-2542-41DD-9604-18EB5FE77B52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05027FE2-2C4E-4676-8E37-B90B0B6974B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05027FE2-2C4E-4676-8E37-B90B0B6974B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05027FE2-2C4E-4676-8E37-B90B0B6974B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05027FE2-2C4E-4676-8E37-B90B0B6974B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{94F9B62F-25EC-4533-A020-C7207FB297F2} = {09973AEE-25F0-49FF-928B-CCABF6462C90}
 		{C77455B6-2542-41DD-9604-18EB5FE77B52} = {9B9BA759-075F-46E3-BB90-E9FA50405772}
+		{05027FE2-2C4E-4676-8E37-B90B0B6974B9} = {9B9BA759-075F-46E3-BB90-E9FA50405772}
 	EndGlobalSection
 EndGlobal

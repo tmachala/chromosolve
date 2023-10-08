@@ -4,6 +4,7 @@ public class DifferentialEvolution<TIndividual>
 {
     private readonly DifferentialEvolutionSettings<TIndividual> _settings;
     private readonly Random _random;
+    private double _bestFitnessReported = double.MaxValue;
 
     public DifferentialEvolution(DifferentialEvolutionSettings<TIndividual> settings)
     {
@@ -13,13 +14,14 @@ public class DifferentialEvolution<TIndividual>
 
     public EvolutionResult<TIndividual> Optimize(int generations)
     {
-        var popSize = _settings.PopulationSize;
+        var fitnessFn = _settings.FitnessFunction;
+        var stopThreshold = _settings.FitnessFunction.StopThreshold;
+        var mapper = _settings.PhenotypeMapper;
+        
         var chromosomeLen = _settings.ChromosomeLength;
+        var popSize = _settings.PopulationSize;
         var lowerBound = _settings.LowerBound;
         var upperBound = _settings.UpperBound;
-        var fitnessFn = _settings.FitnessFunction;
-        var mapper = _settings.PhenotypeMapper;
-        var stopThreshold = _settings.FitnessFunction.StopThreshold;
         
         var population = new double[popSize][];
         var fitness = new double[popSize];
@@ -84,6 +86,7 @@ public class DifferentialEvolution<TIndividual>
                 
                 if (trialFitness < fitness[i])
                 {
+                    ReportProgress(gen, trialFitness, trialIndividual);
                     population[i] = trial;
                     fitness[i] = trialFitness;
                 }
@@ -91,13 +94,9 @@ public class DifferentialEvolution<TIndividual>
                 // End the evolution right here if we have found an ideal solution
                 if (trialFitness <= stopThreshold)
                 {
-                    //Console.WriteLine($"Gen {gen}; Best Fitness: {fitness.Min()}");
-                    
                     return new EvolutionResult<TIndividual>(gen, trialFitness, trialIndividual);
                 }
             }
-            
-            //Console.WriteLine($"Gen {gen}; Best Fitness: {fitness.Min()}");
         }
 
         // Find and return the best individual
@@ -108,7 +107,6 @@ public class DifferentialEvolution<TIndividual>
 
     private (double[], double[], double[]) PickThreeChromosomes(ref double[][] population)
     {
-        // Ugly but fast
         var popSize = _settings.PopulationSize;
         
         var a = _random.Next(0, popSize);
@@ -126,5 +124,14 @@ public class DifferentialEvolution<TIndividual>
         } while (a == c || b == c);
 
         return (population[a], population[b], population[c]);
+    }
+
+    private void ReportProgress(int generation, double fitness, TIndividual individual)
+    {
+        if (fitness >= _bestFitnessReported) return;
+        
+        Console.WriteLine($"Gen: {generation}; Fitness: {fitness}");
+
+        _bestFitnessReported = fitness;
     }
 }
