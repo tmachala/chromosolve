@@ -4,7 +4,6 @@ public class DifferentialEvolution<TIndividual>
 {
     private readonly DifferentialEvolutionSettings<TIndividual> _settings;
     private readonly Random _random;
-    private double _bestFitnessReported = double.MaxValue;
 
     public DifferentialEvolution(DifferentialEvolutionSettings<TIndividual> settings)
     {
@@ -25,6 +24,10 @@ public class DifferentialEvolution<TIndividual>
         
         var population = new double[popSize][];
         var fitness = new double[popSize];
+
+        EvolutionResult<TIndividual>? bestSolution = null;
+        var bestFitnessFound = double.MaxValue;
+        var bestFitnessReported = double.MaxValue;
         
         // Create the first (totally random) generation and evaluate it
         for (var i = 0; i < popSize; i++)
@@ -86,23 +89,34 @@ public class DifferentialEvolution<TIndividual>
                 
                 if (trialFitness < fitness[i])
                 {
-                    ReportProgress(gen, trialFitness, trialIndividual);
                     population[i] = trial;
                     fitness[i] = trialFitness;
                 }
+
+                if (trialFitness < bestFitnessFound)
+                {
+                    bestSolution = new EvolutionResult<TIndividual>(gen, trialFitness, trialIndividual);
+                    bestFitnessFound = trialFitness;
+                }
                 
-                // End the evolution right here if we have found an ideal solution
+                // End the evolution right here if we have found a good enough solution
                 if (trialFitness <= stopThreshold)
                 {
-                    return new EvolutionResult<TIndividual>(gen, trialFitness, trialIndividual);
+                    return bestSolution!;
                 }
             }
+            
+            // Report the progress once per generation only and only when there has been an improvement
+            if (bestFitnessReported > bestFitnessFound && _settings.OnProgress != null)
+            {
+                _settings.OnProgress(bestSolution!);
+                bestFitnessReported = bestFitnessFound;
+            }
         }
-
-        // Find and return the best individual
-        var bestFitness = fitness.Min();
-        var bestIndividual = mapper.CreateIndividual(population[Array.IndexOf(fitness, bestFitness)]);
-        return new EvolutionResult<TIndividual>(generations, bestFitness, bestIndividual);
+        
+        // The final phenotype is going to be the same as in bestSolution but the generation number might have increased
+        // since then so we can't return the bestSolution directly.
+        return new EvolutionResult<TIndividual>(generations, bestSolution!.Fitness, bestSolution.Individual);
     }
 
     private (double[], double[], double[]) PickThreeChromosomes(ref double[][] population)
@@ -124,14 +138,5 @@ public class DifferentialEvolution<TIndividual>
         } while (a == c || b == c);
 
         return (population[a], population[b], population[c]);
-    }
-
-    private void ReportProgress(int generation, double fitness, TIndividual individual)
-    {
-        if (fitness >= _bestFitnessReported) return;
-        
-        Console.WriteLine($"Gen: {generation}; Fitness: {fitness}");
-
-        _bestFitnessReported = fitness;
     }
 }

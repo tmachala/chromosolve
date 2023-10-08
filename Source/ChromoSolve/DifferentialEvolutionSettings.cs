@@ -22,6 +22,8 @@ public class DifferentialEvolutionSettings<TIndividual>
     /// (candidate solutions).
     /// </summary>
     public IPhenotypeMapper<TIndividual> PhenotypeMapper { get; set; } = null!;
+
+    public Action<EvolutionResult<TIndividual>>? OnProgress { get; set; } = null;
     
     /// <summary>
     /// Gets or sets the random number generator used for various stochastic processes in Differential Evolution, 

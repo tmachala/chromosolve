@@ -25,13 +25,17 @@ var settings = new DifferentialEvolutionSettings<Individual>
     ChromosomeLength = PhenotypeMapper.RequiredChromosomeLength,
     
     // How many individuals should the evolution create in each generation
-    PopulationSize = 100
+    PopulationSize = 100,
+    
+    // A custom action that logs the evolution progress into console
+    OnProgress = i => Console.WriteLine($"Generation: {i.Generation}; Fitness: {i.Fitness}")
 };
 
 var evolution = new DifferentialEvolution<Individual>(settings);
 
 var result = evolution.Optimize(generations: 1000);
 
+Console.WriteLine("-----------------------------");
 Console.WriteLine($"Best Route Found: {result.Individual}");
 Console.WriteLine($"Total Distance:   {result.Fitness} km");
 Console.WriteLine($"Generation:       {result.Generation}");
