@@ -55,9 +55,9 @@ public class PhenotypeMapper : IPhenotypeMapper<Individual>
                     actual += cts.Value * cappedQty;
                     envelope.Cash.Add(new Cash(cts.Type, cts.Value, cappedQty));
                 }
-                
-                individual.Envelopes.Add(envelope);
             }
+            
+            individual.Envelopes.Add(envelope);
         }
         
         return individual;

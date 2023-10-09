@@ -13,7 +13,7 @@ public class Individual
         
         foreach (var env in Envelopes)
         {
-            sb.AppendLine($"Envelope {i++}:");
+            sb.AppendLine($"------- ENVELOPE {i++} -------");
             sb.Append(env);
         }
 
