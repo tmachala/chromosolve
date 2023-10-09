@@ -69,13 +69,6 @@ In a nutshell, evolutionary algorithms are like super-smart trial and error mach
 **If both apply, evolutionary algorithms might be a solid approach for your problem optimization!**
 
 
-
-
-
-
-
-
-
 ## 🚀 Quick Start
 
 ### Installation
@@ -86,7 +79,12 @@ dotnet add package ChromoSolve
 
 ### Basic Usage
 
-TODO
+See the *Samples* folder:
+
+| Sample                         | Description                   |
+|--------------------------------|-------------------------------|
+| **Traveling Salesman Problem** | Help Bob, the salesman find an optimal route to visit multiple cities.<br/>**Start here** if you're new to evolutionary algorithms. |
+| **Knapsack Problem**           | Find an optimal way how to split certain amount of cash amongst multiple enveloper.<br/>A slightly **more advanced** demo than the above. |
 
 ## 🧬 Features
 
