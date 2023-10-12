@@ -4,6 +4,21 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>ChromoSolve</PackageId>
+    <Version>1.0.2</Version>
+    <Authors>Tomáš Machala</Authors>
+    <Description>Accelerate optimization and problem-solving in .NET with versatile evolutionary algorithms.</Description>
+    <Lang>en-US</Lang>
+    <Copyright>Copyright (c) Tomáš Machala 2023</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/tmachala/chromosolve</PackageProjectUrl>
+    <PackageRepository>https://github.com/tmachala/chromosolve</PackageRepository>
   </PropertyGroup>
+
+<!--  <PropertyGroup>-->
+<!--    <OutputPath>bin\lib\$(TargetFramework)\</OutputPath>-->
+<!--  </PropertyGroup>-->
 
 </Project>
